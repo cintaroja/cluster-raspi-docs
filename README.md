@@ -86,11 +86,14 @@ Cluster RasPi/
 ### Para Desarrolladores
 - [Diario de Trabajo](doc/diario-trabajo.md) - Historial completo
 - [Estado del Proyecto](doc/estado-proyecto.md) - Estado actual
-- [Análisis de Opciones](doc/guias-tecnicas/servidores-contrasenas-opciones.md)
+- [Análisis de Opciones](doc/guias-tecnicas/servidores-contrasenas-opciones.md) - Comparación de servidores
+- [Estado de Almacenamiento](doc/guias-tecnicas/estado-almacenamiento.md) - Análisis de almacenamiento
+- [Comandos y Consultas](doc/guias-tecnicas/comandos-consultas-logs.md) - Comandos útiles
+- [Acceso Público](doc/guias-tecnicas/acceso-publico-vaultwarden.md) - Análisis de acceso público
 
 ### Para Usuarios
 - [Credenciales Vaultwarden](vaultwarden-credentials.md) - Acceso y configuración
-- [Guía de Almacenamiento](doc/guias-tecnicas/estado-almacenamiento.md)
+- [Resumen Acceso Público](RESUMEN-ACCESO-PUBLICO.md) - Opciones para acceso público
 
 ## 🛠️ Comandos Útiles
 

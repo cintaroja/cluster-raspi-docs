@@ -213,3 +213,71 @@ ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 6022 
 
 **Última actualización**: 2025-08-24  
 **Estado**: ✅ Comandos verificados y funcionando
+
+## 🔗 VPN y Acceso Remoto
+
+### Comandos de Gestión VPN
+```bash
+# Conectar VPN (script automatizado)
+./connect-vpn.sh
+
+# Conectar VPN manualmente
+sudo openvpn --config raspi-udp-split-improved.ovpn --daemon
+
+# Desconectar VPN
+sudo pkill openvpn
+
+# Verificar estado de VPN
+ps aux | grep openvpn
+ip addr show tun0
+```
+
+**Propósito**: Gestionar conexión VPN al cluster
+**Información obtenida**: Estado de conexión VPN, interfaz tun0
+
+### Verificación de Conectividad VPN
+```bash
+# Verificar conectividad a internet
+ping -c 3 google.com
+
+# Verificar acceso al cluster
+ping -c 3 k8sraspi.myddns.me
+
+# Verificar SSH al cluster
+ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022 "echo 'SSH OK'"
+```
+
+**Propósito**: Verificar que la VPN funciona correctamente
+**Información obtenida**: Conectividad a internet y cluster
+
+### Acceso a Vaultwarden vía VPN
+```bash
+# Acceso automatizado con verificaciones
+./access-vaultwarden-vpn.sh
+
+# Acceso manual con túnel SSH
+ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem -L 8080:localhost:30080 carlos@k8sraspi.myddns.me -p 6022 -N &
+
+# Verificar acceso web
+curl -I http://localhost:8080
+```
+
+**Propósito**: Acceder a Vaultwarden usando VPN
+**Información obtenida**: Estado del servicio, acceso web
+
+### Análisis de Acceso Público
+```bash
+# Verificar puertos abiertos en cluster
+ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022 "sudo netstat -tlnp | grep -E ':(80|443|30080)'"
+
+# Verificar servicios de tipo LoadBalancer/Ingress
+ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022 "kubectl get svc -A | grep -E '(LoadBalancer|ingress)'"
+
+# Probar acceso directo al NodePort
+curl -I http://192.168.1.52:30080
+```
+
+**Propósito**: Analizar opciones para acceso público
+**Información obtenida**: Puertos abiertos, servicios expuestos, conectividad directa
+
+---
