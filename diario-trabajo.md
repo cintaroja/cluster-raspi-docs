@@ -1,33 +1,31 @@
 # Diario de Trabajo - Cluster RasPi
 
-## 2025-08-24 - Aplicación de Feedback de Carlos en PR
+## 2025-08-24 - Renovación de Seguridad y Finalización del Proyecto
 
-### 🔧 Mejoras Aplicadas según Feedback
+### 🔒 Renovación de Seguridad Realizada
 
-**Carlos revisó la PR y proporcionó excelente feedback técnico**:
+**Problema identificado**: ADMIN_TOKEN de Vaultwarden expuesto en repositorios públicos.
 
-1. **Eliminación de nodeSelector**:
-   - **Problema**: nodeSelector innecesario ya que el master está tainted
-   - **Solución**: Eliminado para permitir escalabilidad futura
-   - **Beneficio**: Vaultwarden se instala automáticamente en node2
+**Acciones tomadas**:
+1. **ADMIN_TOKEN renovado**: Token anterior comprometido, nuevo token generado y aplicado
+2. **Documentación limpiada**: Información sensible eliminada de repositorios públicos
+3. **Archivos sensibles protegidos**: Agregados a .gitignore
+4. **Certificados Kubernetes**: Mantenidos para no interrumpir acceso de Carlos
 
-2. **Eliminación de CPU limits**:
-   - **Problema**: CPU limits pueden causar throttling y problemas de performance
-   - **Solución**: Eliminados siguiendo mejores prácticas de Kubernetes
-   - **Beneficio**: Mejor performance y estabilidad
+**Estado de seguridad**:
+- ✅ ADMIN_TOKEN renovado y aplicado
+- ✅ Documentación pública limpia
+- ✅ Repositorios organizados y seguros
+- ✅ Acceso de Carlos mantenido
 
-3. **Aumento de almacenamiento a 7GB**:
-   - **Problema**: Solo se usaban 2GB de los 7GB disponibles en la partición
-   - **Solución**: Reservar toda la partición para Vaultwarden
-   - **Beneficio**: Máximo aprovechamiento del espacio disponible
+### 📁 Repositorios Finalizados
 
-**Archivos modificados**:
-- `vaultwarden-deployment.yaml`: Eliminado nodeSelector y CPU limits
-- `vaultwarden-pv.yaml`: Aumentado storage a 7Gi
-- `vaultwarden-pvc.yaml`: Aumentado requests a 7Gi
-- `README.md`: Documentación actualizada
+1. **cluster-raspi-docs** (GitHub): Documentación completa del proyecto
+2. **raspk8s** (Pull Request): Manifiestos Kubernetes de Vaultwarden
 
-**Estado**: ✅ Cambios aplicados y subidos a la PR
+### 📧 Comunicación con Carlos
+
+Preparado correo con información sensible para transferencia segura del proyecto.
 
 ## 2025-08-24 - Finalización: Vaultwarden Completamente Funcional ✅
 
@@ -231,68 +229,135 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
 4. **Configurar monitoreo**: Alertas y métricas para Vaultwarden
 5. **Documentar uso**: Guías de usuario y administración
 
----
-
-## 📅 2025-01-24 - Configuración VPN y Organización de Documentación
-
-### 🔧 Configuración VPN Split-Tunnel ✅
-- **Problema identificado**: VPN original cortaba toda la conectividad
-- **Solución**: Configuración split-tunnel mejorada
-- **Archivo**: `raspi-udp-split-improved.ovpn`
-- **Configuración**:
-  ```bash
-  route-nopull
-  route 192.168.1.0 255.255.255.0
-  route 10.244.0.0 255.255.0.0
-  route 10.96.0.0 255.240.0.0
-  route 88.7.208.182 255.255.255.255
-  ```
-- **Resultado**: Acceso al cluster sin perder conectividad a internet
-
-### 🛠️ Scripts de Automatización ✅
-- **`connect-vpn.sh`**: Script para conectar VPN con verificaciones
-- **`access-vaultwarden-vpn.sh`**: Script para acceder a Vaultwarden vía VPN
-- **Funcionalidades**:
-  - Verificación de conectividad pre/post VPN
-  - Creación automática de túnel SSH
-  - Verificación de estado de servicios
-
-### 📁 Organización de Documentación ✅
-- **Problema**: Duplicación entre carpetas `doc/` y `docs/`
-- **Solución**: Estructura clara con dos repositorios específicos
-
-#### Repositorio `doc/` (Local - Trabajo Interno)
-- **Propósito**: Documentación interna con información sensible
-- **Contenido**: Diario detallado, credenciales, configuraciones sensibles
-- **Seguridad**: Puede contener información sensible, NO subir a remotos
-
-#### Repositorio `cluster-raspi-docs/` (GitHub - Documentación Pública)
-- **Propósito**: Documentación técnica limpia para compartir
-- **Contenido**: Guías técnicas, scripts, resúmenes ejecutivos
-- **Seguridad**: Sin información sensible, usa placeholders
-
-### 🔒 Seguridad y Credenciales ✅
-- **Problema**: Exposición de ADMIN_TOKEN en documentación pública
-- **Solución**: 
-  - Renovación de tokens
-  - Uso de placeholders: `[CONFIGURAR_TOKEN_SEGURO]`
-  - `.gitignore` estricto para archivos sensibles
-- **Verificación**: Documentación pública sin información sensible
-
-### 📋 Refactorización de Estructura ✅
-- **Carpetas creadas**:
-  - `scripts/`: Scripts de automatización
-  - `configs/`: Configuraciones
-  - `manifests/`: Manifiestos Kubernetes
-  - `summaries/`: Resúmenes ejecutivos
-- **READMEs**: Documentación específica para cada carpeta
-
-### 🎯 Estado Final del Proyecto
-- **Vaultwarden**: Funcionando en cluster RasPi
-- **VPN**: Configuración split-tunnel operativa
-- **Documentación**: Organizada en dos repositorios específicos
-- **Seguridad**: Información sensible protegida
-- **Scripts**: Automatización de tareas comunes
-
 ### 🏷️ Tags
-#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad #helm-local #vaultwarden #instalacion-exitosa #worker-node #almacenamiento-dedicado #vpn-split-tunnel #organizacion-documentacion #seguridad-credenciales #scripts-automatizacion #refactorizacion-estructura
+#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad #helm-local #vaultwarden #instalacion-exitosa #worker-node #almacenamiento-dedicado
+
+## 2025-01-24 - Trabajo en VPN del Cluster RasPi
+
+### 🔍 Análisis del Problema VPN
+- **Estado inicial**: VPN no funcional según documentación anterior
+- **Nueva información**: Carlos confirma que la VPN funciona perfectamente en su sistema
+- **Hipótesis**: El problema está en la configuración local, no en el servidor VPN
+
+### 🧪 Pruebas Realizadas
+#### 1. Verificación de Conectividad Básica
+- ✅ Ping a `k8sraspi.myddns.me`: Funciona correctamente (12ms)
+- ✅ Sin procesos VPN activos inicialmente
+
+#### 2. Activación de VPN Original
+- **Comando**: `sudo openvpn --config raspi-udp.ovpn --daemon`
+- **Resultado**: VPN se activa pero interrumpe comunicación con asistente
+- **Observación**: Usuario mantiene acceso a internet, pero asistente pierde conexión
+
+#### 3. Prueba en Modo Interactivo
+- **Comando**: `sudo openvpn --config raspi-udp.ovpn --verb 3`
+- **Estado**: En progreso - esperando confirmación de comportamiento
+
+#### 4. Prueba Controlada de Comunicación ⚠️ CONFIRMADO
+- **Método**: Test de conectividad antes y durante activación VPN
+- **Resultado**: ✅ VPN funciona correctamente, pero interrumpe comunicación con asistente
+- **Confirmación**: Usuario tuvo que detener VPN para recuperar comunicación
+- **Conclusión**: La VPN redirige todo el tráfico, incluyendo conexión SSH del asistente
+- **Error Técnico**: `ConnectError: [unknown] Network disconnected` - confirma interrupción de red
+
+### 🎯 Plan de Pruebas Sistemáticas
+1. **Confirmar comportamiento de desconexión** cuando VPN se activa
+2. **Verificar configuración de rutas** antes y después de activar VPN
+3. **Probar configuración split-tunnel** si es necesario
+4. **Comparar con configuración de Carlos** (pendiente)
+
+### 📋 Tareas Pendientes
+- [x] Confirmar si la desconexión es real o por impaciencia del usuario
+- [x] Solicitar configuración VPN de Carlos para comparación
+- [x] Probar configuración split-tunnel si la original no es adecuada
+- [x] Documentar solución final
+
+### ✅ SOLUCIÓN VPN ENCONTRADA - 2025-01-24
+#### Configuración Split-Tunnel Mejorada
+- **Archivo**: `raspi-udp-split-improved.ovpn`
+- **Estado**: ✅ FUNCIONANDO PERFECTAMENTE
+- **Características**:
+  - `route-nopull` - Evita redirección completa de tráfico
+  - Rutas específicas del cluster: `192.168.1.0/24`, `10.244.0.0/16`, `10.96.0.0/12`
+  - DNS explícito: `8.8.8.8`, `8.8.4.4`
+  - Mantiene conectividad a internet mientras accede al cluster
+
+#### Verificaciones Exitosas
+- ✅ Conectividad a internet mantenida (ping a Google)
+- ✅ Acceso al cluster funcionando (ping a k8sraspi.myddns.me)
+- ✅ SSH al cluster funcionando (acceso completo)
+- ✅ Comunicación con asistente mantenida
+- ✅ kubectl funcionando (acceso completo al cluster)
+
+#### Verificación de Vaultwarden y Helm - 2025-01-24
+##### Estado de Vaultwarden
+- **Pod**: `vaultwarden-b58b8c66c-xj6rm` - Running (14h)
+- **Servicios**: 
+  - `vaultwarden` (ClusterIP: 10.98.64.146:80)
+  - `vaultwarden-nodeport` (NodePort: 30080)
+- **Acceso Web**: ✅ Funcionando en http://localhost:8080 (túnel SSH)
+
+##### Verificación de Helm
+- **Helm local**: ✅ Instalado (v3.14.3)
+- **Helm en cluster**: ❌ No instalado
+- **Conclusión**: Vaultwarden se instaló con `kubectl apply`, NO con Helm
+- **Razón**: Se optó por instalación manual para mayor control y simplicidad
+
+#### Scripts Creados
+- **`connect-vpn.sh`**: Script automatizado para conectar VPN con verificaciones
+- **Uso**: `./connect-vpn.sh`
+- **Funcionalidades**: Verificación de conectividad, activación VPN, validación de acceso
+
+- **`access-vaultwarden-vpn.sh`**: Script para acceder a Vaultwarden usando VPN
+- **Uso**: `./access-vaultwarden-vpn.sh`
+- **Funcionalidades**: Verificación de VPN, estado de Vaultwarden, túnel SSH, acceso web
+
+#### Comandos de Uso
+```bash
+# Conectar VPN
+./connect-vpn.sh
+
+# Acceder a Vaultwarden (requiere VPN activa)
+./access-vaultwarden-vpn.sh
+
+# Conectar manualmente
+sudo openvpn --config raspi-udp-split-improved.ovpn --daemon
+
+# Desconectar VPN
+sudo pkill openvpn
+
+# Verificar estado
+ps aux | grep openvpn
+```
+
+### 🔐 Consideraciones de Seguridad
+- **Recordatorio**: Verificar información sensible antes de cualquier commit/push
+- **Archivos sensibles**: `.ovpn`, certificados, claves privadas
+- **Documentación**: Usar placeholders para datos sensibles
+
+### 🎯 CONCLUSIONES Y LACITO FINAL - 2025-01-24
+
+#### ✅ Objetivos Cumplidos
+1. **VPN Funcional**: ✅ Configuración split-tunnel que mantiene conectividad
+2. **Acceso a Vaultwarden**: ✅ Web interface accesible vía túnel SSH
+3. **Verificación de Instalación**: ✅ Confirmado que se usó kubectl apply, no Helm
+4. **Scripts Automatizados**: ✅ Dos scripts funcionales para VPN y acceso
+
+#### 🔧 Soluciones Implementadas
+- **Configuración VPN**: `raspi-udp-split-improved.ovpn` con rutas específicas
+- **Script de Conexión**: `connect-vpn.sh` con verificaciones automáticas
+- **Script de Acceso**: `access-vaultwarden-vpn.sh` para acceso web
+- **Documentación**: Actualizada con todos los hallazgos y soluciones
+
+#### 📊 Estado Final
+- **VPN**: ✅ Funcionando perfectamente
+- **Cluster**: ✅ Acceso completo vía SSH y kubectl
+- **Vaultwarden**: ✅ Accesible en http://localhost:8080
+- **Comunicación**: ✅ Mantenida con asistente
+- **Scripts**: ✅ Automatizados y funcionales
+
+#### 🎉 Resultado Final
+**Cluster RasPi completamente funcional con VPN estable y Vaultwarden accesible.**
+**Trabajo documentado y automatizado para uso futuro.**
+
+---
