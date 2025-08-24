@@ -74,6 +74,48 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
   ```
 - **Estado**: Cluster accesible vía SSH, VPN no necesaria para acceso básico
 
+#### 6. Análisis de Almacenamiento y Recursos ✅
+- **Master Node**: 98GB disponible en disco principal
+- **Worker Node**: 48GB disponible + MicroSD particionada
+  - **Partición 1**: 15GB (Prometheus) - 150MB usado
+  - **Partición 2**: 6.8GB (libre) - 24KB usado
+  - **Partición 3**: 7.7GB (Grafana) - 40MB usado
+- **Recomendación**: Usar partición libre (/mnt/sdcard/7gb) para nuevos servicios
+
+#### 7. Instalación de Helm Local ✅
+- **Decisión**: Instalar Helm en máquina local en lugar del cluster
+- **Razón**: Mantener cluster limpio y separar responsabilidades
+- **Instalación**:
+  ```bash
+  curl https://get.helm.sh/helm-v3.14.3-linux-amd64.tar.gz -o helm.tar.gz
+  tar -xzf helm.tar.gz && sudo mv linux-amd64/helm /usr/local/bin/
+  ```
+
+#### 8. Instalación de Vaultwarden ✅
+- **Decisión**: Instalar en Worker Node (node2) por seguridad y arquitectura
+- **Configuración**:
+  - **Namespace**: vaultwarden
+  - **Almacenamiento**: 2GB en /mnt/sdcard/7gb/vaultwarden
+  - **Recursos**: 512MB-1GB RAM, 200-500m CPU
+  - **Node Selector**: node2 (worker node)
+
+- **Manifiestos creados**:
+  - vaultwarden-namespace.yaml
+  - vaultwarden-pv.yaml
+  - vaultwarden-pvc.yaml
+  - vaultwarden-deployment.yaml
+  - vaultwarden-service.yaml
+
+- **Instalación exitosa**:
+  ```bash
+  kubectl apply -f vaultwarden-*.yaml
+  ```
+- **Estado final**:
+  - Pod: Running en node2 (10.244.1.190)
+  - PV: Bound (2GB)
+  - Service: ClusterIP creado
+  - Port-forward: 8080:80 configurado
+
 ### 🔍 Observaciones Técnicas
 
 #### Arquitectura del Cluster
@@ -91,6 +133,7 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
 - **SSH Directo**: Acceso funcional vía puertos 5022/6022
 - **Dominio dinámico**: k8sraspi.myddns.me resuelve a 88.7.208.182
 - **Claves específicas**: raspi.pem para carlos, raspijavi para javier
+- **Helm local**: Instalación en máquina local para mantener cluster limpio
 
 #### Patrones de Trabajo del Usuario
 - **Experiencia**: 25 años en sistemas e infraestructura cloud
@@ -99,12 +142,14 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
 - **Seguridad**: Utiliza VPN para acceso remoto, configuración de certificados
 - **Resolución de problemas**: Identifica rápidamente problemas de conectividad
 - **Documentación**: Mantiene información técnica detallada en múltiples fuentes
+- **Arquitectura**: Prefiere separación de responsabilidades y cluster limpio
 
 ### 📝 Próximos Pasos
-1. **Configurar kubectl con SSH proxy**: Para acceso directo desde local
-2. **Investigación de servidores de contraseñas**: Continuar con opciones disponibles
-3. **Implementar Vaultwarden**: Una vez configurado el acceso kubectl
-4. **Configurar persistencia**: Usar espacio libre de MicroSD
+1. **Configurar acceso seguro**: Generar ADMIN_TOKEN seguro para Vaultwarden
+2. **Configurar ingress**: Para acceso web permanente
+3. **Configurar backup**: Sistema de respaldo automático
+4. **Configurar monitoreo**: Alertas y métricas para Vaultwarden
+5. **Documentar uso**: Guías de usuario y administración
 
 ### 🏷️ Tags
-#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad
+#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad #helm-local #vaultwarden #instalacion-exitosa #worker-node #almacenamiento-dedicado
