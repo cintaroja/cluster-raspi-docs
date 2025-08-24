@@ -57,6 +57,23 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
   - estado-proyecto.md
   - guias-tecnicas/ (carpeta)
 
+#### 5. Resolución de Conectividad - SSH Directo ✅
+- **Descubrimiento**: Configuración SSH en puertos no estándar
+  - **Nodo1 (master)**: Puerto 5022
+  - **Nodo2 (worker)**: Puerto 6022
+- **Conexión exitosa**:
+  ```bash
+  ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022
+  ```
+- **Verificación del cluster**:
+  ```bash
+  kubectl get nodes
+  NAME    STATUS   ROLES           AGE    VERSION
+  node1   Ready    control-plane   431d   v1.32.6
+  node2   Ready    <none>          100d   v1.32.6
+  ```
+- **Estado**: Cluster accesible vía SSH, VPN no necesaria para acceso básico
+
 ### 🔍 Observaciones Técnicas
 
 #### Arquitectura del Cluster
@@ -70,18 +87,24 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
 - **Red**: Posible problema de routing o configuración de red
 - **Conectividad**: Cluster no accesible desde red externa
 
+#### Soluciones Implementadas
+- **SSH Directo**: Acceso funcional vía puertos 5022/6022
+- **Dominio dinámico**: k8sraspi.myddns.me resuelve a 88.7.208.182
+- **Claves específicas**: raspi.pem para carlos, raspijavi para javier
+
 #### Patrones de Trabajo del Usuario
 - **Experiencia**: 25 años en sistemas e infraestructura cloud
 - **Enfoque**: Metódico, prefiere documentación completa
 - **Gestión de configuraciones**: Mantiene múltiples contextos kubectl organizados
 - **Seguridad**: Utiliza VPN para acceso remoto, configuración de certificados
 - **Resolución de problemas**: Identifica rápidamente problemas de conectividad
+- **Documentación**: Mantiene información técnica detallada en múltiples fuentes
 
 ### 📝 Próximos Pasos
-1. **Resolver problema VPN**: Investigar configuración de red del cluster
-2. **Alternativas de acceso**: Considerar port-forwarding o acceso directo
-3. **Investigación de servidores de contraseñas**: Continuar con opciones disponibles
-4. **Implementar solución**: Una vez resuelta la conectividad
+1. **Configurar kubectl con SSH proxy**: Para acceso directo desde local
+2. **Investigación de servidores de contraseñas**: Continuar con opciones disponibles
+3. **Implementar Vaultwarden**: Una vez configurado el acceso kubectl
+4. **Configurar persistencia**: Usar espacio libre de MicroSD
 
 ### 🏷️ Tags
-#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel
+#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad
