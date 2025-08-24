@@ -32,3 +32,9 @@ Thumbs.db
 # Backup files
 *.bak
 *.backup
+
+# Sensitive files
+*.ovpn
+config
+kubectl-raspi-proxy.sh
+RESUMEN-PARA-COMPAÑERO.md

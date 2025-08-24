@@ -6,7 +6,7 @@
 
 ## Credenciales de Administración
 - **URL Admin**: http://localhost:8080/admin
-- **ADMIN_TOKEN**: `qPAML52XhI7Cn/Y5GHKZ5fy2PRHagDu2G04n1HXtpRU=`
+- **ADMIN_TOKEN**: `[CONFIGURAR_TOKEN_SEGURO]`
 
 ## Configuración Actual
 - **Registro de usuarios**: ✅ Habilitado
@@ -23,7 +23,7 @@
 
 ### 2. Acceder al Panel de Administración
 1. Ir a http://localhost:8080/admin
-2. Introducir el ADMIN_TOKEN: `qPAML52XhI7Cn/Y5GHKZ5fy2PRHagDu2G04n1HXtpRU=`
+2. Introducir el ADMIN_TOKEN: `[CONFIGURAR_TOKEN_SEGURO]`
 
 ### 3. Configurar Organización (Opcional)
 - Crear organización para familia/amigos

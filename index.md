@@ -37,7 +37,7 @@ Este proyecto implementa un **servidor de contraseñas Vaultwarden** en un clust
 ### Para Administradores
 1. **Acceso al cluster**: `ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022`
 2. **Panel admin Vaultwarden**: http://localhost:8080/admin
-3. **Token admin**: `qPAML52XhI7Cn/Y5GHKZ5fy2PRHagDu2G04n1HXtpRU=`
+3. **Token admin**: `[CONFIGURAR_TOKEN_SEGURO]`
 
 ---
 
