@@ -12,7 +12,14 @@
 - **Usuarios**: Registro habilitado para familia/amigos
 - **Administración**: Panel admin disponible con token seguro
 
-#### 2. **Stack de Monitoreo** (Pre-existente)
+#### 2. **VPN** (Acceso Remoto)
+- **Estado**: ✅ Funcionando perfectamente
+- **Configuración**: Split-tunnel mejorada
+- **Archivo**: `raspi-udp-split-improved.ovpn`
+- **Características**: Mantiene conectividad a internet
+- **Scripts**: `connect-vpn.sh` y `access-vaultwarden-vpn.sh`
+
+#### 3. **Stack de Monitoreo** (Pre-existente)
 - **Prometheus**: Métricas del cluster
 - **Grafana**: Dashboards de visualización
 - **cAdvisor**: Métricas de contenedores
@@ -41,14 +48,17 @@ Cluster RasPi
 ### Acceso y Seguridad
 
 #### Acceso al Cluster
+- **VPN**: Configuración split-tunnel funcional
 - **SSH**: Usuario `carlos` con clave `raspi.pem` (puerto 5022)
 - **SSH Worker**: Usuario `carlos` con clave `raspi.pem` (puerto 6022)
 - **kubectl**: Via SSH al master node
 
 #### Acceso a Vaultwarden
-- **Método**: SSH tunnel + NodePort
+- **Método 1**: VPN + SSH tunnel + NodePort
+- **Método 2**: SSH tunnel directo
 - **URL**: http://localhost:8080
-- **Script**: `./access-vaultwarden.sh`
+- **Script VPN**: `./access-vaultwarden-vpn.sh`
+- **Script directo**: `./access-vaultwarden.sh`
 
 ### Documentación Disponible
 
@@ -68,12 +78,14 @@ Cluster RasPi
 
 #### Prioridad Media
 1. **Acceso web seguro** - HTTPS + Ingress
-2. **Configuración VPN** - Acceso remoto seguro
-3. **Backup automático** - Protección de datos
+2. **Backup automático** - Protección de datos
 
 #### Prioridad Baja
 1. **Integración con monitoring** - Métricas de Vaultwarden
 2. **Optimización de recursos** - Ajustes de performance
+
+#### ✅ Completado
+1. **Configuración VPN** - Acceso remoto seguro ✅
 
 ### Estado de Salud del Cluster
 

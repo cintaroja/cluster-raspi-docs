@@ -12,6 +12,7 @@ Este proyecto implementa un servidor de contraseñas **Vaultwarden** (compatible
 - 🌐 Acceso web disponible en http://localhost:8080
 - 👥 Registro de usuarios habilitado para familia/amigos
 - 🔐 Panel de administración configurado
+- 🔗 **VPN funcional** para acceso remoto seguro
 
 ## 🏗️ Arquitectura
 
@@ -34,9 +35,11 @@ Cluster RasPi
 3. **Usar apps móviles/desktop**: Configurar con la URL del servidor
 
 ### Para Administradores
-1. **Acceso al cluster**: `ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022`
-2. **Panel admin Vaultwarden**: http://localhost:8080/admin
-3. **Token admin**: `[CONFIGURAR_TOKEN_SEGURO]`
+1. **Conectar VPN**: `./connect-vpn.sh`
+2. **Acceder a Vaultwarden**: `./access-vaultwarden-vpn.sh`
+3. **Acceso directo al cluster**: `ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022`
+4. **Panel admin Vaultwarden**: http://localhost:8080/admin
+5. **Token admin**: `[CONFIGURAR_TOKEN_SEGURO]`
 
 ## 📁 Estructura del Proyecto
 
@@ -49,7 +52,8 @@ Cluster RasPi/
 │   └── guias-tecnicas/            # Guías técnicas
 ├── raspk8s/                       # Repositorio de infraestructura
 ├── vaultwarden-*.yaml            # Manifiestos Kubernetes
-├── access-vaultwarden.sh         # Script de acceso
+├── connect-vpn.sh                # Script de conexión VPN
+├── access-vaultwarden-vpn.sh     # Script de acceso a Vaultwarden
 ├── vaultwarden-credentials.md    # Credenciales
 └── README.md                     # Este archivo
 ```
@@ -60,6 +64,7 @@ Cluster RasPi/
 - Cluster Kubernetes en Raspberry Pi
 - Acceso SSH a los nodos
 - Helm (instalado localmente)
+- **VPN configurada** para acceso remoto
 
 ### Servicios Instalados
 - **Vaultwarden**: Servidor de contraseñas
@@ -69,6 +74,12 @@ Cluster RasPi/
 ### Almacenamiento
 - **node1**: 15GB (sistema) + 8GB (disponible)
 - **node2**: 7GB (Vaultwarden usa 7GB)
+
+### VPN
+- **Configuración**: Split-tunnel mejorada
+- **Archivo**: `raspi-udp-split-improved.ovpn`
+- **Estado**: ✅ Funcionando perfectamente
+- **Características**: Mantiene conectividad a internet
 
 ## 📚 Documentación
 
@@ -84,21 +95,28 @@ Cluster RasPi/
 ## 🛠️ Comandos Útiles
 
 ```bash
+# Conectar VPN
+./connect-vpn.sh
+
 # Acceder a Vaultwarden
-./access-vaultwarden.sh
+./access-vaultwarden-vpn.sh
 
 # Ver estado del cluster
 ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022 "kubectl get pods -A"
 
 # Ver logs de Vaultwarden
 ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 5022 "kubectl logs -n vaultwarden deployment/vaultwarden"
+
+# Desconectar VPN
+sudo pkill openvpn
 ```
 
 ## 🔮 Próximos Pasos
 
 ### Prioridad Alta
+- [x] Configurar VPN funcional
+- [x] Verificar acceso a Vaultwarden
 - [ ] Organizar repositorios (infraestructura + documentación)
-- [ ] Compartir documentación con compañero
 
 ### Prioridad Media
 - [ ] Configurar acceso web seguro (HTTPS + Ingress)
