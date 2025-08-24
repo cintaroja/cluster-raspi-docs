@@ -29,32 +29,59 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
   kubectl config use-context raspberry
   ```
 
-#### 3. Configuración de VPN 🔄
-- **Acción**: Iniciada conexión VPN para acceder al cluster
+#### 3. Configuración de VPN - Problema Identificado ⚠️
+- **Problema**: La configuración VPN original redirige todo el tráfico, cortando el acceso a internet
+- **Primer intento**: 
   ```bash
   sudo openvpn --config raspi-udp.ovpn --daemon
   ```
-- **Estado**: En proceso de verificación de conectividad
+  **Resultado**: Pérdida de conectividad a internet, proceso terminado manualmente
+
+- **Segundo intento**: Creación de configuración split-tunnel
+  ```bash
+  # Creación de raspi-udp-split.ovpn con:
+  route-nopull
+  route 192.168.1.0 255.255.255.0
+  route 10.244.0.0 255.255.0.0
+  ```
+  **Resultado**: VPN conecta pero no hay acceso al cluster (ping falla)
+
+- **Estado actual**: VPN no funcional, necesaria revisión de configuración
+
+#### 4. Sistema de Documentación Establecido ✅
+- **Repositorio Git**: Inicializado en carpeta `doc/`
+- **Estructura creada**:
+  - README.md con convenciones
+  - diario-trabajo.md (este archivo)
+  - observaciones-ia.md
+  - estado-proyecto.md
+  - guias-tecnicas/ (carpeta)
 
 ### 🔍 Observaciones Técnicas
 
 #### Arquitectura del Cluster
 - **Red de pods**: 10.244.0.0/16 (Flannel)
-- **Container Runtime**: Migrado de Docker a containerd
+- **Container Runtime**: containerd (migrado desde Docker)
 - **Almacenamiento**: MicroSD con particiones específicas para servicios
 - **Monitoreo**: Stack completo con dashboards de Grafana expuestos vía ngrok
+
+#### Problemas Identificados
+- **VPN**: Configuración no funcional para acceso al cluster
+- **Red**: Posible problema de routing o configuración de red
+- **Conectividad**: Cluster no accesible desde red externa
 
 #### Patrones de Trabajo del Usuario
 - **Experiencia**: 25 años en sistemas e infraestructura cloud
 - **Enfoque**: Metódico, prefiere documentación completa
 - **Gestión de configuraciones**: Mantiene múltiples contextos kubectl organizados
 - **Seguridad**: Utiliza VPN para acceso remoto, configuración de certificados
+- **Resolución de problemas**: Identifica rápidamente problemas de conectividad
 
 ### 📝 Próximos Pasos
-1. Verificar conectividad VPN al cluster
-2. Investigar opciones de servidores de contraseñas open source
-3. Evaluar Bitwarden/Vaultwarden vs alternativas
-4. Implementar la solución elegida
+1. **Resolver problema VPN**: Investigar configuración de red del cluster
+2. **Alternativas de acceso**: Considerar port-forwarding o acceso directo
+3. **Investigación de servidores de contraseñas**: Continuar con opciones disponibles
+4. **Implementar solución**: Una vez resuelta la conectividad
 
 ### 🏷️ Tags
-#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno
+#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel
