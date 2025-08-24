@@ -179,13 +179,15 @@ vaultwarden.k8sraspi.myddns.me -> 88.7.208.182:443
 
 ---
 *Análisis creado: 2025-01-24*
-*Estado: Pendiente de implementación*
+*Estado: Acceso VPN funcional, acceso público pendiente*
 
 ## 🔍 Análisis Práctico - Infraestructura Actual
 
 ### Verificaciones Realizadas
 - ✅ Cluster funcionando (2 nodos Raspberry Pi)
 - ✅ Vaultwarden operativo (NodePort 30080)
+- ✅ VPN split-tunnel funcional para acceso remoto
+- ✅ Acceso web funcionando vía túnel SSH (localhost:8080)
 - ❌ Puerto 30080 no expuesto externamente
 - ❌ No hay Ingress Controller instalado
 - ✅ DNS `k8sraspi.myddns.me` funcionando

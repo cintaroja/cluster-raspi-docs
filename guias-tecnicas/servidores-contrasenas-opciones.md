@@ -230,4 +230,25 @@ resources:
 - 🔄 **Apps móviles**: Configurar acceso directo
 - 🔄 **Backup**: Implementar backup automático
 
+## 📁 Organización de Documentación - 2025-01-24
+
+### Estructura Implementada
+- **`cluster-raspi-docs/`**: Documentación pública (GitHub Pages)
+- **`doc/`**: Documentación interna con información sensible
+- **`scripts/`**: Scripts de automatización
+- **`manifests/`**: Archivos de configuración Kubernetes
+- **`summaries/`**: Resúmenes ejecutivos
+
+### Seguridad de Documentación
+- ✅ **Verificación sistemática**: Antes de cada commit/push
+- ✅ **Placeholders**: `[CONFIGURAR_TOKEN_SEGURO]` para datos sensibles
+- ✅ **Separación**: Información sensible en repositorio local
+- ✅ **Sincronización**: Documentación actualizada entre repositorios
+
+### Documentación Disponible
+- **Guías técnicas**: Comandos, almacenamiento, opciones
+- **Resúmenes ejecutivos**: Estado del proyecto, VPN, acceso público
+- **Diario de trabajo**: Historial completo de decisiones
+- **Observaciones IA**: Análisis de patrones de trabajo
+
 ---

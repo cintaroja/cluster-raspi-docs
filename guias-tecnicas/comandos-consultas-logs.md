@@ -211,8 +211,43 @@ ssh -o IdentitiesOnly=yes -i ~/.ssh/raspi.pem carlos@k8sraspi.myddns.me -p 6022 
 
 ---
 
-**Última actualización**: 2025-08-24  
+**Última actualización**: 2025-01-24  
 **Estado**: ✅ Comandos verificados y funcionando
+
+## 📁 Gestión de Documentación
+
+### Comandos de Organización de Repositorios
+```bash
+# Comparar tamaños de archivos entre repositorios
+wc -l doc/diario-trabajo.md cluster-raspi-docs/diario-trabajo.md
+
+# Verificar información sensible en archivos
+grep -r "ADMIN_TOKEN\|password\|secret\|token" cluster-raspi-docs/ --include="*.md"
+
+# Verificar estado de repositorio
+cd cluster-raspi-docs && git status
+
+# Hacer commit con verificación de seguridad
+git add . && git commit -m "Update documentation with security verification"
+```
+
+**Propósito**: Gestionar documentación entre repositorios
+**Información obtenida**: Sincronización de archivos, verificación de seguridad
+
+### Comandos de Verificación de Seguridad
+```bash
+# Buscar información sensible en archivos específicos
+grep -n "ADMIN_TOKEN\|password\|secret\|token" archivo.md
+
+# Verificar archivos excluidos en .gitignore
+git check-ignore archivo_sensible.ovpn
+
+# Listar archivos que se van a commitear
+git diff --cached --name-only
+```
+
+**Propósito**: Verificar que no hay información sensible antes de commits
+**Información obtenida**: Archivos con información sensible, archivos a commitear
 
 ## 🔗 VPN y Acceso Remoto
 
