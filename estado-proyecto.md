@@ -1,5 +1,100 @@
 # Estado del Proyecto - Cluster RasPi
 
+## Estado Actual: Vaultwarden Operativo ✅
+
+### Servicios Instalados y Funcionando
+
+#### 1. **Vaultwarden** (Servidor de Contraseñas)
+- **Estado**: ✅ Completamente operativo
+- **Ubicación**: Worker node (node2)
+- **Almacenamiento**: 2GB en `/mnt/sdcard/7gb/vaultwarden`
+- **Acceso**: http://localhost:8080 (via SSH tunnel)
+- **Usuarios**: Registro habilitado para familia/amigos
+- **Administración**: Panel admin disponible con token seguro
+
+#### 2. **Stack de Monitoreo** (Pre-existente)
+- **Prometheus**: Métricas del cluster
+- **Grafana**: Dashboards de visualización
+- **cAdvisor**: Métricas de contenedores
+
+### Arquitectura del Cluster
+
+```
+Cluster RasPi
+├── Master Node (node1)
+│   ├── Kubernetes Control Plane
+│   ├── Prometheus Stack
+│   └── Gestión del cluster
+└── Worker Node (node2)
+    ├── Vaultwarden (servidor de contraseñas)
+    └── Almacenamiento dedicado (7GB partition)
+```
+
+### Almacenamiento Configurado
+
+| Nodo | Partición | Tamaño | Uso |
+|------|-----------|--------|-----|
+| node1 | `/mnt/sdcard/15gb` | 15GB | Sistema y logs |
+| node1 | `/mnt/sdcard/8gb` | 8GB | Disponible |
+| node2 | `/mnt/sdcard/7gb` | 7GB | **Vaultwarden (2GB usado)** |
+
+### Acceso y Seguridad
+
+#### Acceso al Cluster
+- **SSH**: Usuario `carlos` con clave `raspi.pem` (puerto 5022)
+- **SSH Worker**: Usuario `carlos` con clave `raspi.pem` (puerto 6022)
+- **kubectl**: Via SSH al master node
+
+#### Acceso a Vaultwarden
+- **Método**: SSH tunnel + NodePort
+- **URL**: http://localhost:8080
+- **Script**: `./access-vaultwarden.sh`
+
+### Documentación Disponible
+
+#### Guías Técnicas
+- `servidores-contrasenas-opciones.md` - Análisis de opciones
+- `estado-almacenamiento.md` - Análisis de almacenamiento
+
+#### Documentación de Usuario
+- `vaultwarden-credentials.md` - Credenciales y configuración
+- `diario-trabajo.md` - Historial completo de trabajo
+
+### Próximos Desarrollos
+
+#### Prioridad Alta
+1. **Organización de repositorios** - Separar infraestructura y documentación
+2. **Compartir con compañero** - Documentación completa
+
+#### Prioridad Media
+1. **Acceso web seguro** - HTTPS + Ingress
+2. **Configuración VPN** - Acceso remoto seguro
+3. **Backup automático** - Protección de datos
+
+#### Prioridad Baja
+1. **Integración con monitoring** - Métricas de Vaultwarden
+2. **Optimización de recursos** - Ajustes de performance
+
+### Estado de Salud del Cluster
+
+#### Recursos Utilizados
+- **CPU**: Bajo uso (Vaultwarden + monitoring)
+- **Memoria**: Uso moderado
+- **Almacenamiento**: 2GB de 7GB disponibles en node2
+
+#### Servicios Críticos
+- ✅ Kubernetes API Server
+- ✅ Vaultwarden
+- ✅ Prometheus/Grafana
+- ✅ Almacenamiento persistente
+
+### Notas Importantes
+
+1. **Seguridad**: El acceso actual es via SSH tunnel (seguro)
+2. **Escalabilidad**: El cluster puede soportar más servicios
+3. **Mantenimiento**: Documentación completa para continuidad
+4. **Backup**: Necesario implementar backup automático de Vaultwarden
+
 ## 📊 Estado Actual
 
 ### ✅ Componentes Funcionales
