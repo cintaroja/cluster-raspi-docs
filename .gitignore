@@ -33,8 +33,38 @@ Thumbs.db
 *.bak
 *.backup
 
-# Sensitive files
+# Sensitive files - CRITICAL: Never commit these to public repositories
 *.ovpn
 config
 kubectl-raspi-proxy.sh
 RESUMEN-PARA-COMPAÑERO.md
+vaultwarden-credentials.md
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# SSH keys and certificates
+~/.ssh/
+*.pem
+*.key
+*.crt
+
+# Kubernetes configs with sensitive data
+kubeconfig
+config
+
+# VPN configurations
+*.ovpn
+*.conf
+
+# Admin tokens and passwords
+*credentials*
+*token*
+*password*
+*secret*
+
+# Personal information
+*personal*
+*private*

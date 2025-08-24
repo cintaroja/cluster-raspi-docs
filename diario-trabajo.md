@@ -231,5 +231,68 @@ Instalación de un servidor de contraseñas open source en el cluster de Kuberne
 4. **Configurar monitoreo**: Alertas y métricas para Vaultwarden
 5. **Documentar uso**: Guías de usuario y administración
 
+---
+
+## 📅 2025-01-24 - Configuración VPN y Organización de Documentación
+
+### 🔧 Configuración VPN Split-Tunnel ✅
+- **Problema identificado**: VPN original cortaba toda la conectividad
+- **Solución**: Configuración split-tunnel mejorada
+- **Archivo**: `raspi-udp-split-improved.ovpn`
+- **Configuración**:
+  ```bash
+  route-nopull
+  route 192.168.1.0 255.255.255.0
+  route 10.244.0.0 255.255.0.0
+  route 10.96.0.0 255.240.0.0
+  route 88.7.208.182 255.255.255.255
+  ```
+- **Resultado**: Acceso al cluster sin perder conectividad a internet
+
+### 🛠️ Scripts de Automatización ✅
+- **`connect-vpn.sh`**: Script para conectar VPN con verificaciones
+- **`access-vaultwarden-vpn.sh`**: Script para acceder a Vaultwarden vía VPN
+- **Funcionalidades**:
+  - Verificación de conectividad pre/post VPN
+  - Creación automática de túnel SSH
+  - Verificación de estado de servicios
+
+### 📁 Organización de Documentación ✅
+- **Problema**: Duplicación entre carpetas `doc/` y `docs/`
+- **Solución**: Estructura clara con dos repositorios específicos
+
+#### Repositorio `doc/` (Local - Trabajo Interno)
+- **Propósito**: Documentación interna con información sensible
+- **Contenido**: Diario detallado, credenciales, configuraciones sensibles
+- **Seguridad**: Puede contener información sensible, NO subir a remotos
+
+#### Repositorio `cluster-raspi-docs/` (GitHub - Documentación Pública)
+- **Propósito**: Documentación técnica limpia para compartir
+- **Contenido**: Guías técnicas, scripts, resúmenes ejecutivos
+- **Seguridad**: Sin información sensible, usa placeholders
+
+### 🔒 Seguridad y Credenciales ✅
+- **Problema**: Exposición de ADMIN_TOKEN en documentación pública
+- **Solución**: 
+  - Renovación de tokens
+  - Uso de placeholders: `[CONFIGURAR_TOKEN_SEGURO]`
+  - `.gitignore` estricto para archivos sensibles
+- **Verificación**: Documentación pública sin información sensible
+
+### 📋 Refactorización de Estructura ✅
+- **Carpetas creadas**:
+  - `scripts/`: Scripts de automatización
+  - `configs/`: Configuraciones
+  - `manifests/`: Manifiestos Kubernetes
+  - `summaries/`: Resúmenes ejecutivos
+- **READMEs**: Documentación específica para cada carpeta
+
+### 🎯 Estado Final del Proyecto
+- **Vaultwarden**: Funcionando en cluster RasPi
+- **VPN**: Configuración split-tunnel operativa
+- **Documentación**: Organizada en dos repositorios específicos
+- **Seguridad**: Información sensible protegida
+- **Scripts**: Automatización de tareas comunes
+
 ### 🏷️ Tags
-#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad #helm-local #vaultwarden #instalacion-exitosa #worker-node #almacenamiento-dedicado
+#configuracion #kubectl #vpn #analisis-proyecto #limpieza-entorno #problema-conectividad #split-tunnel #ssh-directo #resolucion-conectividad #helm-local #vaultwarden #instalacion-exitosa #worker-node #almacenamiento-dedicado #vpn-split-tunnel #organizacion-documentacion #seguridad-credenciales #scripts-automatizacion #refactorizacion-estructura
