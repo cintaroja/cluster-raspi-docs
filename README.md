@@ -8,7 +8,7 @@ Este proyecto implementa un servidor de contraseñas **Vaultwarden** (compatible
 
 **Vaultwarden completamente operativo**:
 - 🚀 Servidor funcionando en worker node (node2)
-- 💾 Almacenamiento persistente de 2GB configurado
+- 💾 Almacenamiento persistente de 7GB configurado
 - 🌐 Acceso web disponible en http://localhost:8080
 - 👥 Registro de usuarios habilitado para familia/amigos
 - 🔐 Panel de administración configurado
@@ -68,7 +68,7 @@ Cluster RasPi/
 
 ### Almacenamiento
 - **node1**: 15GB (sistema) + 8GB (disponible)
-- **node2**: 7GB (Vaultwarden usa 2GB)
+- **node2**: 7GB (Vaultwarden usa 7GB)
 
 ## 📚 Documentación
 

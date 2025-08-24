@@ -7,7 +7,7 @@
 #### 1. **Vaultwarden** (Servidor de Contraseñas)
 - **Estado**: ✅ Completamente operativo
 - **Ubicación**: Worker node (node2)
-- **Almacenamiento**: 2GB en `/mnt/sdcard/7gb/vaultwarden`
+- **Almacenamiento**: 7GB en `/mnt/sdcard/7gb/vaultwarden`
 - **Acceso**: http://localhost:8080 (via SSH tunnel)
 - **Usuarios**: Registro habilitado para familia/amigos
 - **Administración**: Panel admin disponible con token seguro
@@ -36,7 +36,7 @@ Cluster RasPi
 |------|-----------|--------|-----|
 | node1 | `/mnt/sdcard/15gb` | 15GB | Sistema y logs |
 | node1 | `/mnt/sdcard/8gb` | 8GB | Disponible |
-| node2 | `/mnt/sdcard/7gb` | 7GB | **Vaultwarden (2GB usado)** |
+| node2 | `/mnt/sdcard/7gb` | 7GB | **Vaultwarden (7GB usado)** |
 
 ### Acceso y Seguridad
 
@@ -80,7 +80,7 @@ Cluster RasPi
 #### Recursos Utilizados
 - **CPU**: Bajo uso (Vaultwarden + monitoring)
 - **Memoria**: Uso moderado
-- **Almacenamiento**: 2GB de 7GB disponibles en node2
+- **Almacenamiento**: 7GB de 7GB usados en node2
 
 #### Servicios Críticos
 - ✅ Kubernetes API Server

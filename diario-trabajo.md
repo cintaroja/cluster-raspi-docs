@@ -1,5 +1,34 @@
 # Diario de Trabajo - Cluster RasPi
 
+## 2025-08-24 - Aplicación de Feedback de Carlos en PR
+
+### 🔧 Mejoras Aplicadas según Feedback
+
+**Carlos revisó la PR y proporcionó excelente feedback técnico**:
+
+1. **Eliminación de nodeSelector**:
+   - **Problema**: nodeSelector innecesario ya que el master está tainted
+   - **Solución**: Eliminado para permitir escalabilidad futura
+   - **Beneficio**: Vaultwarden se instala automáticamente en node2
+
+2. **Eliminación de CPU limits**:
+   - **Problema**: CPU limits pueden causar throttling y problemas de performance
+   - **Solución**: Eliminados siguiendo mejores prácticas de Kubernetes
+   - **Beneficio**: Mejor performance y estabilidad
+
+3. **Aumento de almacenamiento a 7GB**:
+   - **Problema**: Solo se usaban 2GB de los 7GB disponibles en la partición
+   - **Solución**: Reservar toda la partición para Vaultwarden
+   - **Beneficio**: Máximo aprovechamiento del espacio disponible
+
+**Archivos modificados**:
+- `vaultwarden-deployment.yaml`: Eliminado nodeSelector y CPU limits
+- `vaultwarden-pv.yaml`: Aumentado storage a 7Gi
+- `vaultwarden-pvc.yaml`: Aumentado requests a 7Gi
+- `README.md`: Documentación actualizada
+
+**Estado**: ✅ Cambios aplicados y subidos a la PR
+
 ## 2025-08-24 - Finalización: Vaultwarden Completamente Funcional ✅
 
 ### Estado Final del Proyecto
